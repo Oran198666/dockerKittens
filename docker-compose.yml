@@ -1,0 +1,43 @@
+# Build images:
+# docker compose build
+
+# Build image if not exist, and run (-d = detach the terminal):
+# docker compose up -d
+
+# Build image always, and run (-d = detach the terminal):
+# docker compose up -d --build
+
+services:
+
+    # Our backend service:
+    backend-service:
+
+        # Our image:
+        image: kittens-image
+
+        # Build the image from the following Dockerfile location:
+        build: .
+
+        # Container name:
+        container_name: kitten-container
+
+        # Port mapping (host:container):
+        ports:
+            - 4001:4000
+
+        # On crash - restart container:
+        restart: unless-stopped
+
+        # Host Volume (host:container):
+        # Volumes:
+        volumes:
+            # Live code reload from host:
+            - ./src:/app/src
+
+            # Persistent data (named volume):
+            - kittens-volume:/app/src/assets
+
+# list of all our named-volumes
+volumes:
+    kittens-volume:
+
